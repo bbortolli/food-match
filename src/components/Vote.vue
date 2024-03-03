@@ -29,6 +29,7 @@ const formularioDados = ref({});
 
 function enviarFormulario() {
   const dados = formularioDados.value;
+  console.log(dados);
 }
 
 </script>
