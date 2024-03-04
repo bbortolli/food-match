@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
-import { auth } from './firebase';
+import { auth, matchesRef } from './firebase';
 import { router } from './routes';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import {
   signInWithEmailAndPassword,
   setPersistence,
@@ -9,19 +10,31 @@ import {
   onAuthStateChanged
 } from 'firebase/auth';
 
+function hoje() {
+  const currentDate = new Date();
+  return currentDate.toLocaleDateString('en-CA');
+}
+
 const state = () => ({
-  usuario: null
+  usuario: null,
+  match: []
 });
 
 const getters = {
   getUsuario(state) {
     return state.usuario;
+  },
+  getMatch(state) {
+    return state.match;
   }
 };
 
 const mutations = {
   setUsuario(state, usuario) {
     state.usuario = usuario;
+  },
+  setMatch(state, match) {
+    state.match = match;
   }
 };
 
@@ -50,6 +63,41 @@ const actions = {
       router.push('/');
     } catch (e) {
       console.log('Erro inesperado: ', e);
+    }
+  },
+  async createMatch(context, match) {
+    const content = {};
+    const data = hoje();
+    const { email } = context.getters.getUsuario;
+    content[email] = match;
+
+
+    try {
+      const docRef = await setDoc(doc(matchesRef, data), content, { merge: true });
+      console.log('Match Added with ID: ', docRef);
+    } catch (error) {
+      console.error('Error Adding: ', error);
+    }
+
+    return match;
+  },
+  async getMatchHoje(context) {
+    const dhoje = hoje();
+    const { email } = context.getters.getUsuario;
+    try {
+      const docRef = doc(matchesRef, dhoje);
+      const docSnap = await getDoc(docRef);
+      const dados = docSnap.data();
+      if (dados) {
+        const emailsResultado = Object.keys(dados);
+        const resultadoDoUsuario = emailsResultado.length == 1 && emailsResultado.includes(email);
+        const resultadoCompleto = emailsResultado.length == 2;
+        if (resultadoDoUsuario || resultadoCompleto) {
+          context.commit('setMatch', dados);
+        }
+      }
+    } catch (err) {
+      console.error('Error Getting Users: ', err);
     }
   }
 };

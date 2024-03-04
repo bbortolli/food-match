@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from 'vue';
+import { useStore } from 'vuex';
+const store = useStore();
 
 const opcoesVoto = [
   { valor: 3, texto: '❤️ Amo, quero!' },
@@ -27,8 +29,9 @@ const lugares = [
 
 const formularioDados = ref({});
 
-function enviarFormulario() {
+async function enviarFormulario() {
   const dados = formularioDados.value;
+  await store.dispatch('createMatch', dados);
   console.log(dados);
 }
 

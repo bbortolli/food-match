@@ -15,7 +15,7 @@ const usuario = computed(() => {
     class="p-2 w-screen h-screen"
   >
     <div
-      v-if="!!usuario"
+      v-if="usuario"
       id="conteudo"
       class="p-2 w-full h-full"
     >
