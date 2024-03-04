@@ -46,7 +46,8 @@ const actions = {
   async logout(context) {
     try {
       await signOut(auth);
-      context.commit('setDadosLogin', null);
+      context.commit('setUsuario', null);
+      router.push('/');
     } catch (e) {
       console.log('Erro inesperado: ', e);
     }
@@ -65,9 +66,10 @@ onAuthStateChanged(auth, (user) => {
     const { accessToken, displayName, uid, email } = user;
     const usuarioDados = { email, displayName, uid, accessToken };
     store.commit('setUsuario', usuarioDados);
-    router.push('/');
+    router.push('/home');
   } else {
     store.commit('setUsuario', null);
+    router.push('/');
   }
 });
 
