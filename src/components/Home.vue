@@ -7,7 +7,6 @@ const usuario = computed(() => {
   return store.getters.getUsuario;
 });
 
-console.log('usuario', usuario.value);
 </script>
 
 <template>

@@ -31,8 +31,14 @@ const formularioDados = ref({});
 
 async function enviarFormulario() {
   const dados = formularioDados.value;
-  await store.dispatch('createMatch', dados);
-  console.log(dados);
+  const qtdLugares = lugares.length;
+  const qtdDados = dados.length;
+  if (qtdLugares === qtdDados) {
+    await store.dispatch('createMatch', dados);
+    alert('Registrado !');
+  } else {
+    alert('Preencha tudo !');
+  }
 }
 
 </script>

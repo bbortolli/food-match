@@ -73,8 +73,7 @@ const actions = {
 
 
     try {
-      const docRef = await setDoc(doc(matchesRef, data), content, { merge: true });
-      console.log('Match Added with ID: ', docRef);
+      await setDoc(doc(matchesRef, data), content, { merge: true });
     } catch (error) {
       console.error('Error Adding: ', error);
     }
