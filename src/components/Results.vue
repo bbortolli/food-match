@@ -76,10 +76,6 @@ const cabecalho = computed(() => {
       <p>
         Aguardando todos os votos !!!
       </p>
-      <a
-        class="cursor-pointer text-center underline"
-        @click.prevent="$router.back()"
-      >Voltar</a>
     </div>
     <MyTable
       v-else
