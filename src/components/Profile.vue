@@ -5,6 +5,7 @@ import { useStore } from 'vuex';
 const displayNameInput = ref('');
 const store = useStore();
 
+const { displayName } = store.getters.getUsuario;
 function alteraNome() {
   const displayName = displayNameInput.value;
   store.dispatch('alteraNome', { displayName });
@@ -18,6 +19,7 @@ function alteraNome() {
       v-model="displayNameInput"
       class="p-2 rounded focus:outline-none"
       type="text"
+      :placeholder="displayName || 'Nome...'"
     >
     <div class="flex justify-center items-center mt-2">
       <a
