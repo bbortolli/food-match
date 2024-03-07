@@ -24,10 +24,13 @@ async function enviarFormulario() {
   <div class="flex flex-col items-center justify-center h-full w-full">
     <table class="h-full w-full">
       <tr>
-        <th>Lugares</th>
+        <th class="text-center w-1/6">
+          Lugares
+        </th>
         <th
           v-for="opcao in opcoesVoto"
           :key="opcao.valor"
+          class="text-center w-1/6"
         >
           {{ opcao.texto }}
         </th>
@@ -36,10 +39,13 @@ async function enviarFormulario() {
         v-for="lugar in lugares"
         :key="lugar.nome"
       >
-        <td> {{ lugar.texto }} </td>
+        <td class="text-right">
+          {{ lugar.texto }}
+        </td>
         <td
           v-for="opcao in opcoesVoto"
           :key="opcao.valor"
+          class="text-center"
         >
           <input
             v-model="formularioDados[lugar.nome]"
@@ -71,5 +77,10 @@ async function enviarFormulario() {
 <style scoped>
 .botoes {
   margin-top: 1.25em;
+}
+
+input[type="radio"] {
+  height: 1.2rem;
+  width: 1.2rem;
 }
 </style>
