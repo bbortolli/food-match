@@ -68,7 +68,7 @@ const cabecalho = computed(() => {
 </script>
 
 <template>
-  <div class="flex justify-center items-center w-full h-full">
+  <div class="flex flex-col justify-center items-center w-full h-full">
     <div
       v-if="emails && emails.length <= 1"
       class="flex flex-col justify-center items-center"
@@ -86,5 +86,11 @@ const cabecalho = computed(() => {
       :headers="cabecalho"
       :data="resultadoOrdenado"
     />
+    <a
+      class="cursor-pointer pl-2 underline mt-2"
+      @click.prevent="$router.back()"
+    >
+      Voltar
+    </a>
   </div>
 </template>

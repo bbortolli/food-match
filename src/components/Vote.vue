@@ -22,7 +22,7 @@ async function enviarFormulario() {
 
 <template>
   <div class="flex flex-col items-center justify-center h-full w-full">
-    <table class="h-full w-full">
+    <table class="h-3/4 w-3/4">
       <tr>
         <th class="text-center w-1/6">
           Lugares
