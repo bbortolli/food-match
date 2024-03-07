@@ -1,38 +1,15 @@
 <script setup>
 import { ref } from 'vue';
 import { useStore } from 'vuex';
+import { opcoesVoto, lugares } from '../const';
 const store = useStore();
-
-const opcoesVoto = [
-  { valor: 3, texto: '❤️ Amo, quero!' },
-  { valor: 2, texto: '✅ Comeria' },
-  { valor: 1, texto: '🆗 Ok' },
-  { valor: 0, texto: '❌ Nem fodendo' }
-];
-
-const lugares = [
-  { nome: 'ahoy', texto: '🍔 Ahoy' },
-  { nome: 'mc', texto: '🍔 Mc Donalds' },
-  { nome: 'lets', texto: '🍔 Let\'s Eat' },
-  { nome: 'bk', texto: '🍔 Burger King' },
-  { nome: 'saoGeraldo', texto: '🥟 São Geraldo' },
-  { nome: 'charmosa', texto: '🍕 Charmosa' },
-  { nome: 'massarosa', texto: '🍕 Massarosa' },
-  { nome: 'laRosa', texto: '🍝 La Rosa' },
-  { nome: 'coxinhasDouradas', texto: '🥐 Coxinha Dourada' },
-  { nome: 'esquinaArabe', texto: '🥙 Esquina Árabe' },
-  { nome: 'habibs', texto: '🥙 Habibs' },
-  { nome: 'yakisoba', texto: '🍜 China in Box' },
-  { nome: 'fondue', texto: '🍜 Fondue' },
-  { nome: 'escondidinho', texto: '🍜 Escondidinho' }
-];
 
 const formularioDados = ref({});
 
 async function enviarFormulario() {
   const dados = formularioDados.value;
   const qtdLugares = lugares.length;
-  const qtdDados = dados.length;
+  const qtdDados = Object.keys(dados).length;
   if (qtdLugares === qtdDados) {
     await store.dispatch('createMatch', dados);
     alert('Registrado !');
@@ -44,8 +21,8 @@ async function enviarFormulario() {
 </script>
 
 <template>
-  <div>
-    <table>
+  <div class="flex flex-col items-center justify-center h-full w-full">
+    <table class="h-full w-full">
       <tr>
         <th>Lugares</th>
         <th
@@ -75,12 +52,18 @@ async function enviarFormulario() {
     </table>
 
     <div class="botoes">
-      <button
-        class="btn"
+      <a
+        class="cursor-pointer border-r-2 pr-2 underline"
         @click.prevent="enviarFormulario"
       >
         Enviar
-      </button>
+      </a>
+      <a
+        class="cursor-pointer pl-2 underline"
+        @click.prevent="$router.back()"
+      >
+        Voltar
+      </a>
     </div>
   </div>
 </template>

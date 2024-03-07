@@ -7,7 +7,8 @@ import {
   setPersistence,
   browserLocalPersistence,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  updateProfile
 } from 'firebase/auth';
 
 function hoje() {
@@ -31,6 +32,11 @@ const getters = {
 
 const mutations = {
   setUsuario(state, usuario) {
+    state.usuario = usuario;
+  },
+  setUsuarioDisplayName(state, displayName) {
+    const usuario = { ...state.usuario };
+    usuario['displayName'] = displayName;
     state.usuario = usuario;
   },
   setMatch(state, match) {
@@ -60,43 +66,43 @@ const actions = {
     try {
       await signOut(auth);
       context.commit('setUsuario', null);
-      router.push('/');
     } catch (e) {
       console.log('Erro inesperado: ', e);
     }
   },
-  async createMatch(context, match) {
-    const content = {};
+  async createMatch(context, votes) {
     const data = hoje();
-    const { email } = context.getters.getUsuario;
-    content[email] = match;
-
+    const { uid, email } = context.getters.getUsuario;
+    const matchData = {};
+    matchData[uid] = { email, votes };
 
     try {
-      await setDoc(doc(matchesRef, data), content, { merge: true });
+      await setDoc(doc(matchesRef, data), matchData, { merge: true });
     } catch (error) {
       console.error('Error Adding: ', error);
     }
 
-    return match;
+    return matchData;
   },
   async getMatchHoje(context) {
     const dhoje = hoje();
-    const { email } = context.getters.getUsuario;
     try {
       const docRef = doc(matchesRef, dhoje);
       const docSnap = await getDoc(docRef);
       const dados = docSnap.data();
       if (dados) {
-        const emailsResultado = Object.keys(dados);
-        const resultadoDoUsuario = emailsResultado.length == 1 && emailsResultado.includes(email);
-        const resultadoCompleto = emailsResultado.length == 2;
-        if (resultadoDoUsuario || resultadoCompleto) {
-          context.commit('setMatch', dados);
-        }
+        context.commit('setMatch', dados);
       }
     } catch (err) {
       console.error('Error Getting Users: ', err);
+    }
+  },
+  async alteraNome(context, { displayName }) {
+    try {
+      await updateProfile(auth.currentUser, { displayName });
+      context.commit('setUsuarioDisplayName', displayName);
+    } catch (err) {
+      console.error('Error setting displayName: ', err);
     }
   }
 };
@@ -116,7 +122,6 @@ onAuthStateChanged(auth, (user) => {
     router.push('/home');
   } else {
     store.commit('setUsuario', null);
-    router.push('/');
   }
 });
 

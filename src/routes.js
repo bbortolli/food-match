@@ -15,6 +15,11 @@ const routes = [
     path: '/results',
     name: 'results',
     component: () => import('@components/Results.vue')
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('@components/Profile.vue')
   }
 ];
 
