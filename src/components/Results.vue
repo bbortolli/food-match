@@ -15,7 +15,7 @@ const matches = computed(() => {
 function mapaVotos(matches) {
   const resultObject = {};
   matches.forEach((obj) => {
-    resultObject[obj.email] = obj.votes;
+    resultObject[obj.apresenta] = obj.votes;
   });
   return resultObject;
 }

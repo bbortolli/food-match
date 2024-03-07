@@ -72,9 +72,10 @@ const actions = {
   },
   async createMatch(context, votes) {
     const data = hoje();
-    const { uid, email } = context.getters.getUsuario;
+    const { uid, email, displayName } = context.getters.getUsuario;
     const matchData = {};
-    matchData[uid] = { email, votes };
+    const apresenta = displayName || email;
+    matchData[uid] = { apresenta, votes };
 
     try {
       await setDoc(doc(matchesRef, data), matchData, { merge: true });
