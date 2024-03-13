@@ -30,13 +30,13 @@ const isMobile = computed(() => {
   <div class="flex flex-col items-center justify-center h-full w-full">
     <table class="w-full h-full md:h-3/4 md:w-3/4">
       <tr>
-        <th class="text-center text-xs md:text-md w-1/6">
+        <th class="text-center text-xs md:text-md w-1/6 px-1 py-0">
           Lugares
         </th>
         <th
           v-for="opcao in opcoesVoto"
           :key="opcao.valor"
-          class="text-center text-xs md:text-md w-1/6"
+          class="text-center text-xs md:text-md w-1/6 px-1 py-0 md:p-1"
         >
           {{ isMobile ? opcao.emoji : `${opcao.emoji} ${opcao.texto}` }}
         </th>
@@ -45,13 +45,13 @@ const isMobile = computed(() => {
         v-for="lugar in lugares"
         :key="lugar.nome"
       >
-        <td class="text-xs md:text-md text-center md:text-right">
+        <td class="text-xs md:text-md text-center md:text-right px-1 py-0">
           {{ lugar.texto }}
         </td>
         <td
           v-for="opcao in opcoesVoto"
           :key="opcao.valor"
-          class="text-center"
+          class="text-center px-1 py-0"
         >
           <input
             v-model="formularioDados[lugar.nome]"
