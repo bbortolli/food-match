@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { opcoesVoto, lugares } from '../const';
 const store = useStore();
@@ -18,28 +18,34 @@ async function enviarFormulario() {
   }
 }
 
+const screenWidth = ref(screen.width);
+
+const isMobile = computed(() => {
+  return screenWidth.value < 480;
+});
+
 </script>
 
 <template>
   <div class="flex flex-col items-center justify-center h-full w-full">
-    <table class="h-3/4 w-3/4">
+    <table class="w-full h-full md:h-3/4 md:w-3/4">
       <tr>
-        <th class="text-center w-1/6">
+        <th class="text-center text-xs md:text-md w-1/6">
           Lugares
         </th>
         <th
           v-for="opcao in opcoesVoto"
           :key="opcao.valor"
-          class="text-center w-1/6"
+          class="text-center text-xs md:text-md w-1/6"
         >
-          {{ opcao.texto }}
+          {{ isMobile ? opcao.emoji : `${opcao.emoji} ${opcao.texto}` }}
         </th>
       </tr>
       <tr
         v-for="lugar in lugares"
         :key="lugar.nome"
       >
-        <td class="text-right">
+        <td class="text-xs md:text-md text-center md:text-right">
           {{ lugar.texto }}
         </td>
         <td
@@ -52,6 +58,7 @@ async function enviarFormulario() {
             type="radio"
             :name="lugar.nome"
             :value="opcao.valor"
+            class="md:h-5 md:w-5"
           >
         </td>
       </tr>
@@ -59,7 +66,7 @@ async function enviarFormulario() {
 
     <div class="botoes">
       <a
-        class="cursor-pointer border-r-2 pr-2 underline"
+        class="cursor-pointer border-r-2 pr-2 underline mt-2"
         @click.prevent="enviarFormulario"
       >
         Enviar
@@ -73,14 +80,3 @@ async function enviarFormulario() {
     </div>
   </div>
 </template>
-
-<style scoped>
-.botoes {
-  margin-top: 1.25em;
-}
-
-input[type="radio"] {
-  height: 1.2rem;
-  width: 1.2rem;
-}
-</style>

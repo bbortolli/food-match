@@ -19,7 +19,7 @@ function fazLogin() {
 <template>
   <div class="h-full w-full flex flex-row justify-center items-center">
     <form
-      class="flex flex-col h-1/2 w-1/4 justify-center items-center"
+      class="flex flex-col w-full md:w-1/4 justify-center items-center"
       @submit.prevent="fazLogin"
     >
       <input

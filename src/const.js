@@ -1,8 +1,8 @@
 export const opcoesVoto = [
-    { valor: 3, texto: '❤️ Amo, quero!' },
-    { valor: 2, texto: '✅ Comeria' },
-    { valor: 1, texto: '🆗 Ok' },
-    { valor: 0, texto: '❌ Nem fodendo' }
+    { valor: 3, emoji: '❤️', texto: 'Amo, quero!' },
+    { valor: 2, emoji: '✅', texto: 'Comeria' },
+    { valor: 1, emoji: '🆗', texto: 'Ok' },
+    { valor: 0, emoji: '❌', texto: 'Nem fodendo' }
 ];
 
 export const traduzVoto = {
